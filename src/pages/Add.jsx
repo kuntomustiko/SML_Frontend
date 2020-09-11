@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
 
-
 export default function Add() {
     const storeNameRef = useRef()
     const addressRef = useRef()
@@ -48,7 +47,7 @@ export default function Add() {
 </form>
   </div>
 </div>
-<input onClick={onButtonClick} type="button" value="Login" className="btn btn-success btn-block"/>
+    <input onClick={onButtonClick} type="button" value="Login" className="btn btn-success btn-block"/>
         </div>
     )
 }

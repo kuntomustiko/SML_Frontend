@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {Link,Redirect} from 'react-router-dom'
-import axios from '../../config/api'
+import axios from '../config/api'
 import './style.css'
 export default function Login() {
     const username = useSelector(state => state.auth.username)
