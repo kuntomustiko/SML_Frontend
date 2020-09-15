@@ -1,17 +1,34 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {Link,Redirect} from 'react-router-dom'
 
+import { useSelector } from 'react-redux';
+
 import tokoImg1 from '../../assets/image/Store-1.jpg'
 import tokoImg2 from '../../assets/image/Store-2.jpg'
+import axios from '../../config/api'
 
 
 export default function MerchantData() {
-    const [merchant, setMerchant] = useState([{id:"1", image: {tokoImg1}, store_name:"McD",PIC:"Hendra"},
-    {id:"1",image: {tokoImg2}, store_name:"KFC",PIC:"Hendra"},
-    {id:"1",image: {tokoImg1}, store_name:"CFC",PIC:"Hendra"}])
+
+    // dari redux dev tools = 4444 = staff_id
+    const staff_id = useSelector(state => state.auth.staff_id)
+
+    const [merchant, setMerchant] = useState([])
+
+    useEffect(() => {
+        getMerchant();
+    }, [])
+
+    const getMerchant = () =>{
+        console.log(staff_id);
+        axios.get(`/merchant/sales/read/${staff_id}`).then((res) =>{
+            setMerchant(res.data)
+        }).catch(err => console.log(err))
+    }
+
 
     const funDetail = (id) => {
-
+        console.log(" staff " + staff_id);
     }
 
     const renderMerchant = merchant.map((mer) => {
@@ -28,7 +45,7 @@ export default function MerchantData() {
                                     <p className="card-title">{mer.PIC}</p>
                                 </div>
                                 <div className="col-4"> 
-                                <Link to={`/detailmerchant`}>
+                                <Link to={`/detailmerchant/${mer.id}`}>
                                     <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-primary btn-sm px-3 mb-2 mr-2">Detail</button>
                                 </Link>
                                     <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm px-3">Delete</button>
@@ -40,16 +57,13 @@ export default function MerchantData() {
             )
         })  
 
-    return (
+    return staff_id ? (
         <div className="main mx-auto p-5">
             <div className="row">
                 {renderMerchant}
             </div>
-            <div>
-                <Link to ="/add">
-                    <input type="button" value="Tambah" className="btn btn-success btn-block"/>
-                </Link>
-            </div>
         </div>        
+    ) : (
+        <Redirect to="/login" />
     )
 }

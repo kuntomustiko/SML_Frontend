@@ -1,6 +1,10 @@
-import React from 'react'
-
+import React, {useState, useEffect} from 'react'
+import axios from '../config/api'
+import {useParams} from 'react-router-dom'
 import { FaCheck, FaTimes } from "react-icons/fa";
+
+
+// onProgress = menampilkan barang di detail item dari sebuah id yang di klik dari list merchant
 
 // dummy
 import ktpImage from '../../assets/image/KTP-Sample-2.jpg'
@@ -8,6 +12,22 @@ import signImage from '../../assets/image/Sign-1.png'
 
 
 export default function DetailMerchant() {
+
+    const [merchant, setMerchant] = useState({})
+    const {id} = useParams()
+
+    useEffect(() =>{
+        getDataDetailMerchant()
+    },[])
+
+    const getDataDetailMerchant = () =>{
+        axios.get(`/detailmerchant/${id}`)
+        .then(res => {
+            setMerchant(res);
+        })
+        .catch(err => console.log({err}))
+    }
+
     return (
         <div>
             <div className="container-fluid">

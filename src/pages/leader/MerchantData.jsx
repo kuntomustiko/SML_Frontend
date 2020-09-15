@@ -1,11 +1,18 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {Link,Redirect} from 'react-router-dom'
 
+import { useSelector } from 'react-redux';
+
+
 import tokoImg1 from '../../assets/image/Store-1.jpg'
 import tokoImg2 from '../../assets/image/Store-2.jpg'
 
 
 export default function MerchantData() {
+
+    const staff_id = useSelector(state => state.auth.staff_id)
+    console.log(" staff " + staff_id);
+
     const [merchant, setMerchant] = useState([{id:"1", image: {tokoImg1}, store_name:"McD",PIC:"Hendra"},
     {id:"1",image: {tokoImg2}, store_name:"KFC",PIC:"Hendra"},
     {id:"1",image: {tokoImg1}, store_name:"CFC",PIC:"Hendra"}])
