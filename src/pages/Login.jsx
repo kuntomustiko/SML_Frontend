@@ -24,10 +24,10 @@ export default function Login() {
 
         axios.post('/user/login', data)
             .then(({data : {token, user : {id,staff_id, email, role_id}}}) => {
-            // simpan ke redux
-            dispatch(loginAction({staff_id, email, token, role_id}))
-            console.log("berhasil masuk" + staff_id + " token " + token + " username " + email + role_id)
-            setBoolLogin(true)
+                // simpan ke redux
+                dispatch(loginAction({staff_id, email, token, role_id}))
+                console.log("berhasil masuk" + staff_id + " token " + token + " username " + email + role_id)
+                setBoolLogin(true)
             })
             .catch(err => console.log({err}))
     }

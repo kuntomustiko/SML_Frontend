@@ -7,8 +7,8 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 // onProgress = menampilkan barang di detail item dari sebuah id yang di klik dari list merchant
 
 // dummy
-import ktpImage from '../../assets/image/KTP-Sample-2.jpg'
-import signImage from '../../assets/image/Sign-1.png'
+import ktpImage from '../assets/image/KTP-Sample-2.jpg'
+import signImage from '../assets/image/Sign-1.png'
 
 
 export default function DetailMerchant() {
@@ -23,65 +23,61 @@ export default function DetailMerchant() {
     const getDataDetailMerchant = () =>{
         axios.get(`/detailmerchant/${id}`)
         .then(res => {
-            setMerchant(res);
+            setMerchant(res.data[0]);
+            console.log(res.data[0]);
         })
         .catch(err => console.log({err}))
     }
 
     return (
+   
         <div>
             <div className="container-fluid">
-                <div class="card">
-                    <div class="card-body">
+                <div className="card">
+                    <div className="card-body">
                         <div className="row">
                             <div className="col">
-                                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=667&q=80" alt="" className="img-thumbnail"/>
+                                <img src={merchant.store_image} alt="" className="img-thumbnail"/>
                             </div>
                         </div>
                         <div className="row text-center mt-3">
-                            <div className="col-3 offset-2">
-                                <span><FaCheck/> </span>
-                                {/* <span><FaCheck onClick={}/> </span> */}
-                                <p>Approve</p>
-                            </div>
-                            <div className="col-6">
-                                <span><FaTimes/> </span>
-                                <p>Not Approve</p>
-                            </div>
+                            {merchant.approval == "1" ? 
+                                <div className="col-12">
+                                    <span className="text-primary"><FaCheck/> </span>
+                                    <p className="text-primary">Approve</p>
+                                </div> 
+                            :
+                                <div className="col-12">
+                                    <span className="text-danger"><FaTimes/> </span>
+                                    <p className="text-danger">Not Approve</p>
+                                </div>
+                            }
                         </div>
                         <form>
-                            <div class="form-group">
-                                <label >Store xxx</label>
-                                <h5>Weeu Yee</h5>
-                            </div>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label >Merchant Id</label>
-                                <h5>20001</h5>
+                                <h5>{merchant.id}</h5>
                             </div>
-                            <div class="form-group">
-                                <label >Merchant Id</label>
-                                <h5>20001</h5>
+                            <div className="form-group">
+                                <label >Store Name</label>
+                                <h5>{merchant.store_name}</h5>
                             </div>
-                            <div class="form-group">
-                                <label >Merchant Id</label>
-                                <h5>20001</h5>
-                            </div>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label >Mobile Number</label>
-                                <h5>0918345667</h5>
+                                <h5>{merchant.mobile_number}</h5>
                             </div>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label >Address</label>
-                                <h5>Jl. Cipinang Raya No 34 RT/RW 003/002 Jakarta Timur</h5>
-                                <button type="button" class="btn btn-warning">Ganti Location</button>
+                                <h5>{merchant.address}</h5>
+                                <button type="button" className="btn btn-warning">Ganti Location</button>
                             </div>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label >KTP Image</label>
-                                <img className="img-thumbnail" src={ktpImage} alt=""/>
+                                <img className="img-thumbnail" src={merchant.KTP_image} alt=""/>
                             </div>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <label >Sign Image</label>
-                                <img className="img-thumbnail" src={signImage} alt=""/>
+                                <img className="img-thumbnail" src={merchant.signature_image} alt=""/>
                             </div>
                         </form>
                     </div>
