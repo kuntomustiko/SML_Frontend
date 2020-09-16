@@ -85,6 +85,34 @@ export default function UpdateMerchant() {
         setInputGambar(false)
     }
 
+
+    // belum bisa
+    const onButtonSubmitData = () => {
+
+        // var timeNow = new Date();
+        // var date = timeNow.getFullYear()+'-'+(timeNow.getMonth()+1)+'-'+timeNow.getDate();
+
+        // var time = timeNow.getHours() + ":" + timeNow.getMinutes() + ":" + timeNow.getSeconds();
+        // var today = date + ' ' + time;
+
+        // const vStoreNameRef = storeNameRef.current.value 
+        // const vCategoryRef = parseInt(categoryRef.current.value)
+        // const vAddressRef = addressRef.current.value 
+        // const vPhone_numberRef = phone_numberRef.current.value 
+
+        // const latlong = `${latitude}, ${longitude}`
+
+        // let data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: latlong, approval: 0 }
+
+ 
+            // axios.post('/merchant/sales/insert', data)
+            // .then(res => {
+            //     console.log(res);
+            //     setBooBtnSubmitData(true)
+            //     getLastDataFromId()
+            // }).catch(err => console.log({err}))
+    }
+
     return (
         <div>
             <div className="container-fluid">
@@ -153,13 +181,9 @@ export default function UpdateMerchant() {
                                     </Link>  
                                 </div>
                                 <div className="col-6">
-                                    <Link to={`/`}>
-                                        <input type="button" value="Submit" className="btn btn-success btn-block mb-5"/>
-                                    </Link>  
+                                        <input type="button" onClick={onButtonSubmitData} value="Submit" className="btn btn-success btn-block mb-5"/>
                                 </div>
                             </div>
-
-                         
 
                             <div className="form-group">
                                 <label className="mr-3">Store Image</label>
