@@ -1,29 +1,38 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {Link,Redirect} from 'react-router-dom'
+import axios from '../../config/api'
 
-import tokoImg1 from '../../assets/image/Store-1.jpg'
-import tokoImg2 from '../../assets/image/Store-2.jpg'
+export default function ListNotApprove() {
 
+    const [notApproval, setNotApproval] = useState([])
 
-export default function NotApprove() {
-    const [merchant, setMerchant] = useState([{id:"1", image: {tokoImg1}, approve: "Not Approve", store_name:"McD",PIC:"Hendra"},
-    {id:"1",image: {tokoImg2}, approve: "Not Approve", store_name:"KFC",PIC:"Hendra"},
-    {id:"1",image: {tokoImg1}, approve: "Not Approve", store_name:"CFC",PIC:"Hendra"}])
+    useEffect(() => {
+        getNotApproval();
+    }, [])
 
+    
+    const getNotApproval = () =>{
+        axios.get(`/merchant/leader/read/notapproval`).then((res) =>{
+            setNotApproval(res.data)
+            console.log(res.data);
+        }).catch(err => console.log(err))
+    }
 
-    const renderMerchant = merchant.map((mer) => {
+    const urlStoreImage = `http://localhost:2020/merchant/store`
+
+    const renderNotApproval = notApproval.map((app, index) => {
             return (
-                <div className="card mb-2 border border-primary">
+                <div className="card mb-2 border border-primary" key={index}>
                     <div className="card-body">
                        <div className="container-fluid">
                             <div className="row">
                                 <div className="col-3 my-auto">
-                                    <img className="card-img img-fluid" style={{width: 100, height: 50}} alt="Card image" src={tokoImg1}/>
+                                    <img className="card-img img-fluid" style={{width: 100, height: 50}} alt="Card image" src={`${urlStoreImage}/${app.store_image}`}/>
                                 </div>
                                 <div className="col-5">
-                                    <h5 className="card-title"style={{fontSize:".8rem"}}>{mer.store_name}</h5>
-                                    <h5 className="card-title" style={{fontSize:".8rem"}}>{mer.PIC}</h5>
-                                    <h5 className="card-title text-warning " style={{fontSize:".8rem"}}>{mer.approve}</h5>
+                                    <h5 className="card-title"style={{fontSize:".8rem"}}>{app.store_name}</h5>
+                                    <h5 className="card-title" style={{fontSize:".8rem"}}>{app.name}</h5>
+                                    <h5 className="card-title text-warning " style={{fontSize:".8rem"}}>{app.approval}</h5>
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant`}>
@@ -41,7 +50,7 @@ export default function NotApprove() {
     return (
         <div className="main mx-auto p-5">
             <div className="row">
-                {renderMerchant}
+                {renderNotApproval}
             </div>
         </div>        
     )

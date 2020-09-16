@@ -29,10 +29,11 @@ function Register() {
         .then(res => console.log(res.data))
         .catch(err => console.log({err}))
     }
+
     return (
         <div>
             <div className="container-fluid">
-        <div className="row">
+            <div className="row">
             <div className="col-12">
             <div className="card w-100 mx-auto mt-2 ">
                 <div className="card-header">
@@ -67,7 +68,7 @@ function Register() {
                 </div>
             </div>
         </div>
-</div>
+        </div>
         </div>
     )
 }

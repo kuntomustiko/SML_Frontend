@@ -6,10 +6,11 @@ import { loginAction } from '../config/redux/actions'
 import Home from '../pages/leader/Home.jsx'
 import Login from '../pages/Login'
 import Register from '../pages/Register.jsx'
-import Add from '../pages/sales/Add'
+import AddText from '../pages/sales/AddText'
+import AddImage from '../pages/sales/AddImage'
 import MerchantData from '../pages/leader/MerchantData.jsx'
 import DetailMerchant from '../pages/DetailMerchant.jsx'
-import NotApprove from '../pages/leader/NotApprove.jsx'
+import ListNotApproval from '../pages/leader/ListNotApproval.jsx'
 import SalesData from '../pages/leader/SalesData.jsx'
 
 // Staff
@@ -51,11 +52,12 @@ export default function App() {
 
                 <Route path="/login" exact component={Login} />
                 <Route path="/register" exact component={Register} />
-                <Route path="/add" exact component={Add} />
+                <Route path="/addtext" component={AddText} />
+                <Route path="/addimage" component={AddImage} />
                 <Route path="/merchantdataleader"  component={MerchantData} />
                 <Route path="/merchantdatasales"  component={MerchantDataSales} />
                 <Route path="/detailmerchant/:id"  component={DetailMerchant} />
-                <Route path="/notapprove"  component={NotApprove} />
+                <Route path="/notapproval"  component={ListNotApproval} />
                 <Route path="/salesdata"  component={SalesData} />
             </BrowserRouter>
         </div>

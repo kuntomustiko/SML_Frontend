@@ -32,7 +32,7 @@ export default function Home() {
 
                 <div className="row text-center">
                     <div className="col-12">
-                        <Link to={`/add`}>
+                        <Link to={`/addtext`}>
                             <input type="button" value="Tambah Merchant" className="btn btn-primary"/>
                         </Link>
                     </div>

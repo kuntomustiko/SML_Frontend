@@ -3,18 +3,14 @@ import axios from '../config/api'
 import {useParams} from 'react-router-dom'
 import { FaCheck, FaTimes } from "react-icons/fa";
 
-
-// onProgress = menampilkan barang di detail item dari sebuah id yang di klik dari list merchant
-
-// dummy
-import ktpImage from '../assets/image/KTP-Sample-2.jpg'
-import signImage from '../assets/image/Sign-1.png'
-
-
 export default function DetailMerchant() {
 
     const [merchant, setMerchant] = useState({})
     const {id} = useParams()
+    
+    const urlKTPImage = `http://localhost:2020/merchant/ktp`
+    const urlStoreImage = `http://localhost:2020/merchant/store`
+    const urlSignatureImage = `http://localhost:2020/merchant/signature`
 
     useEffect(() =>{
         getDataDetailMerchant()
@@ -29,15 +25,15 @@ export default function DetailMerchant() {
         .catch(err => console.log({err}))
     }
 
+
     return (
-   
         <div>
             <div className="container-fluid">
                 <div className="card">
                     <div className="card-body">
                         <div className="row">
-                            <div className="col">
-                                <img src={merchant.store_image} alt="" className="img-thumbnail"/>
+                            <div className="col text-center">
+                                <img src={`${urlStoreImage}/${merchant.store_image}`} alt="" className="img-thumbnail"/>
                             </div>
                         </div>
                         <div className="row text-center mt-3">
@@ -72,12 +68,12 @@ export default function DetailMerchant() {
                                 <button type="button" className="btn btn-warning">Ganti Location</button>
                             </div>
                             <div className="form-group">
-                                <label >KTP Image</label>
-                                <img className="img-thumbnail" src={merchant.KTP_image} alt=""/>
+                                <label className="mr-3">KTP Image</label>
+                                <img className="img-thumbnail" src={`${urlKTPImage}/${merchant.KTP_image}`} alt=""/>
                             </div>
                             <div className="form-group">
-                                <label >Sign Image</label>
-                                <img className="img-thumbnail" src={merchant.signature_image} alt=""/>
+                                <label className="mr-3" >Signature Image</label>
+                                <img className="img-thumbnail" src={`${urlSignatureImage}/${merchant.signature_image}`} alt=""/>
                             </div>
                         </form>
                     </div>

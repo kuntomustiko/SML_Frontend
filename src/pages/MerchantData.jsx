@@ -11,6 +11,8 @@ export default function Home() {
 
     }
 
+    const urlImage = `http://localhost:2020/product/picture`
+
     const renderMerchant = merchant.map((mer) => {
             return (
                 <div className="card mb-2 border border-danger text-white bg-dark height-card">
@@ -18,7 +20,7 @@ export default function Home() {
                        <div className="container-fluid">
                             <div className="row">
                                 <div className="col-3">
-                                <img className="card-img w-50 my-1 mx-1" alt="Card image"/>
+                                <   img className="card-img w-50 my-1 mx-1" alt="Card image"/>
                                 </div>
                                 <div className="col-6">
                                     <p className="card-title">{mer.store_name}</p>
@@ -41,8 +43,7 @@ export default function Home() {
                     <Link to ="/add">
                          <input type="button" value="Tambah" className="btn btn-success btn-block"/>
                     </Link>
-            
-        </div>
+                </div>
             </div>        
     )
 }

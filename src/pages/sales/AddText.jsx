@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from '../../config/api'
+import {Link, Redirect} from 'react-router-dom'
 
 
 export default function Add() {
@@ -11,9 +12,6 @@ export default function Add() {
     const categoryRef = useRef()
     const addressRef = useRef()
     const phone_numberRef = useRef()
-    const KTPRef = useRef()
-    const storeImageRef = useRef()
-    const signatureRef = useRef()
 
     const [latitude, setLatitude] = useState()
     const [longitude, setLongitude] = useState()
@@ -21,11 +19,12 @@ export default function Add() {
     const [id, setId] = useState()
     const [boolBtnSubmitData, setBooBtnSubmitData] = useState(false)
     const [lastData, setLastData] = useState()
+    const [category, setCategory] = useState([])
 
     useEffect(() =>{
         getLocation()
         getId()
-       
+        getAllCategory()
     },[])
 
     const getLocation = () =>{
@@ -62,7 +61,24 @@ export default function Add() {
         .catch(err => console.log({err}))
     }
 
+    // get read data all category for option
+    const getAllCategory = () =>{
+        axios.get(`/read/allcategory`)
+        .then(res => {
+            setCategory(res.data)
+            console.log(res.data);
+        })
+        .catch(err => console.log({err}))
+    }
 
+    // render category option on UI
+    const renderCategory = () =>{
+        return category.map((cat) =>{
+            return(
+            <option value={cat.id}>{cat.category}</option>  
+            )
+        })
+    }
 
     const onButtonSubmitData = () => {
 
@@ -86,59 +102,8 @@ export default function Add() {
                 console.log(res);
                 setBooBtnSubmitData(true)
                 getLastDataFromId()
-            })
-            .catch(err => console.log({err}))
+            }).catch(err => console.log({err}))
     }
-
-    const onButtonSubmitKTPImage = () => {
-      
-        const body = new FormData()
-        let image = KTPRef.current.files[0]
-
-        // 1 append merupakan 1 baris yang di isi di form-data 
-        body.append("ktpimage", image)
-        // upload gambar dengan membawa data-data
-        body.append("store_name", lastData.store_name)
-        body.append("staff_id", lastData.staff_id)
-
-        axios.patch('/merchant/fistadd/ktpimage', body)
-        .then(res => console.log('foto telah berhasil dirubah'))
-        .catch(err => console.log(err))
-
-
-
-    }
-
-    const onButtonSubmitStoreImage = () => {
-        const body = new FormData()
-        let image = storeImageRef.current.files[0]
-
-        // 1 append merupakan 1 baris yang di isi di form-data 
-        body.append("storeimage", image)
-        // upload gambar dengan membawa data-data
-        body.append("store_name", lastData.store_name)
-        body.append("staff_id", lastData.staff_id)
-
-        axios.patch('/merchant/fistadd/storeimage', body)
-        .then(res => console.log('foto telah berhasil dirubah'))
-        .catch(err => console.log(err))
-    }
-
-    const onButtonSubmitSignatureImage = () => {
-        const body = new FormData()
-        let image = signatureRef.current.files[0]
-
-        // 1 append merupakan 1 baris yang di isi di form-data 
-        body.append("signatureimage", image)
-        // upload gambar dengan membawa data-data
-        body.append("store_name", lastData.store_name)
-        body.append("staff_id", lastData.staff_id)
-
-        axios.patch('/merchant/fistadd/signatureimage', body)
-        .then(res => console.log('foto telah berhasil dirubah'))
-        .catch(err => console.log(err))
-    }
-
 
     return (
         <div>
@@ -153,9 +118,7 @@ export default function Add() {
                                 <input type="text" className="form-control form-control-sm"ref={storeNameRef} placeholder="Masukkan nama toko" required/>
                             <label>Category</label> 
                             <select ref={categoryRef} className="form-control form-control-sm">
-                                <option value="1">Fast Food</option>   
-                                <option value="2">Restaurant</option>   
-                                <option value="3">Barber Shop</option>                        
+                                {renderCategory()}
                             </select>
                             <label>Address</label>
                                 <textarea type="text" className="form-control form-control-sm"ref={addressRef} placeholder="Masukkan alamat" required/>
@@ -165,20 +128,10 @@ export default function Add() {
                                 <p>Latitude {latitude} --- Longitude {longitude}</p>
 
                             {!boolBtnSubmitData ? 
-                                <input onClick={onButtonSubmitData} type="button" value="Submit" className="btn btn-success btn-block"/>
+                                <input onClick={onButtonSubmitData} type="button" value="Next" className="btn btn-success btn-block"/>
                                 : 
-                                <input onClick={onButtonSubmitData} type="button" value="Submit" className="btn btn-secondary btn-block disabled"/>
+                                <Redirect to="/addimage" />
                             }
-
-                            <label className="mt-3">KTP image</label>
-                                <input type="file" className="form-control form-control-sm"ref={KTPRef} placeholder="Masukkan foto KTP" required/>
-                                <input onClick={onButtonSubmitKTPImage} type="button" value="Submit KTP" className="btn btn-success btn-block mt-2 mb-3"/>
-                            <label>Store image</label>
-                                <input type="file" className="form-control form-control-sm"ref={storeImageRef} placeholder="Masukkan foto toko" required/>
-                                <input onClick={onButtonSubmitStoreImage} type="button" value="Submit Store" className="btn btn-success btn-block mt-2 mb-3"/>
-                            <label>Signature</label>
-                                <input type="file" className="form-control form-control-sm"ref={signatureRef} placeholder="Masukkan tanda tangan" required/>
-                                <input onClick={onButtonSubmitSignatureImage} type="button" value="Submit Signature" className="btn btn-success btn-block mt-2 mb-3"/>
                         </div>
                     </form>
                 </div>

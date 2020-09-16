@@ -1,10 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import {Link,Redirect} from 'react-router-dom'
 
-import tokoImg1 from '../../assets/image/Store-1.jpg'
-import tokoImg2 from '../../assets/image/Store-2.jpg'
-
-
 export default function SalesData() {
     const [salesData, setSalesData] = useState([
     {id: "1", staff_id: "23455678", name: "Nancy ciaw", role: "sales", email: "nancy@gmail.com", phone_number: "6281382247337"},
