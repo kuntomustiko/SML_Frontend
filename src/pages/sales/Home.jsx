@@ -1,9 +1,29 @@
 import React from 'react'
-import {Link,Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 // Icons
-import { FaList, FaTimes, FaSignal } from 'react-icons/fa';
+import { FaList, FaSignal } from 'react-icons/fa';
+import axios from '../../config/api'
+
+// Logout
+import {logoutAction} from '../../config/redux/actions'
+import { useSelector, useDispatch } from 'react-redux';
 
 export default function Home() {
+
+    // Logout
+    const dispatch = useDispatch()
+    const staff_id = useSelector(state => state.auth.staff_id)
+    const email = useSelector(state => state.auth.email)
+    const token = useSelector(state => state.auth.token)
+    const role_id = useSelector(state => state.auth.role_id)
+    
+    const config = {headers: {Authorization: token}}  
+
+    const funLogout = () =>{
+        axios.delete('/logout', config)
+        .then(dispatch(logoutAction()))
+    }
+
     return (
         <div>
             <div className="container-fluid">
@@ -34,6 +54,11 @@ export default function Home() {
                     <div className="col-12">
                         <Link to={`/addtext`}>
                             <input type="button" value="Tambah Merchant" className="btn btn-primary"/>
+                        </Link>
+                    </div>
+                    <div className="col-12 mt-5">
+                        <Link to={`/login`}>
+                            <input type="button" value="Logout" onClick={funLogout} className="btn btn-warning"/>
                         </Link>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import {Link,Redirect} from 'react-router-dom'
 import axios from '../config/api'
 import {loginAction} from '../config/redux/actions/index'
 import './style.css'
+
 export default function Login() {
     
     const dispatch = useDispatch()           
@@ -23,7 +24,7 @@ export default function Login() {
 
         let data = {email: vEmailRef, password: vPasswordRef}
 
-        axios.post('/user/login', data)
+        axios.post('/login', data)
             .then(({data : {token, user : {id,staff_id, email, role_id}}}) => {
                 // simpan ke redux
                 dispatch(loginAction({staff_id, email, token, role_id}))
@@ -45,7 +46,7 @@ export default function Login() {
                             <form>
                                 <div className="form-group">
                                     <label>Email </label>
-                                        <input type="text" className="form-control"ref={emailRef} placeholder="Masukkan Email"/>
+                                        <input type="text" className="form-control" ref={emailRef} placeholder="Masukkan Email"/>
                                     <label>Password</label>
                                         <input type="password" className="form-control"ref={passwordRef} placeholder="Masukkan Password"/>
                                 </div>
@@ -54,8 +55,10 @@ export default function Login() {
                                 <p className="text-center">Belum punya akun?</p>
                             </Link>
                                 
-                            <div>    
+                            <div>  
+                            <Link to={`/`}>
                                 <input onClick={onButtonClick} type="button" value="Login" className="btn btn-success btn-block"/>
+                            </Link>  
                             </div>
                         </div>
                     </div>

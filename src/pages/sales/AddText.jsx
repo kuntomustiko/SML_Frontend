@@ -1,8 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from '../../config/api'
-import {Link, Redirect} from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 
+import Swal from 'sweetalert2'
 
 export default function Add() {
 
@@ -97,12 +98,22 @@ export default function Add() {
 
         let data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: latlong, approval: 0 }
 
-        axios.post('/merchant/sales/insert', data)
+        if (vStoreNameRef === "" || vCategoryRef === "" || vAddressRef === "" || vPhone_numberRef === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Lengkapi dahulu datanya',
+                showConfirmButton: false,
+                timer: 1500
+            });  
+        } else{
+            axios.post('/merchant/sales/insert', data)
             .then(res => {
                 console.log(res);
                 setBooBtnSubmitData(true)
                 getLastDataFromId()
             }).catch(err => console.log({err}))
+        }
+      
     }
 
     return (

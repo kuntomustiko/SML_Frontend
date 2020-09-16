@@ -16,17 +16,15 @@ import SalesData from '../pages/leader/SalesData.jsx'
 // Staff
 import HomeSales from '../pages/sales/Home.jsx'
 import MerchantDataSales from '../pages/sales/MerchantData.jsx'
-// import DetailMerchant from '../pages/leader/DetailMerchant.jsx'
 
+// Umum
+import UpdateMerchant from '../pages/UpdateMerchant'
 
 import { useSelector } from 'react-redux';
 
 export default function App() {
-
-
     // role id = 1 = sales, 2 = leader
     const role_id = useSelector(state => state.auth.role_id)
-
 
     const [loading, setLoading] = useState(true)
     const dispatch = useDispatch()
@@ -45,12 +43,11 @@ export default function App() {
         <div>
             <BrowserRouter>
                 {
-                role_id == 1 ? <Route path="/" exact component={HomeSales} /> : 
-                role_id == 2 ? <Route path="/" exact component={Home} /> : 
+                role_id === 1 ? <Route path="/" exact component={HomeSales} /> : 
+                role_id === 2 ? <Route path="/" exact component={Home} /> : 
                 <Route path="/login" exact component={Login} />   
                 }
 
-                <Route path="/login" exact component={Login} />
                 <Route path="/register" exact component={Register} />
                 <Route path="/addtext" component={AddText} />
                 <Route path="/addimage" component={AddImage} />
@@ -59,6 +56,8 @@ export default function App() {
                 <Route path="/detailmerchant/:id"  component={DetailMerchant} />
                 <Route path="/notapproval"  component={ListNotApproval} />
                 <Route path="/salesdata"  component={SalesData} />
+                <Route path="/updatemerchant/:id"  component={UpdateMerchant} />
+
             </BrowserRouter>
         </div>
         

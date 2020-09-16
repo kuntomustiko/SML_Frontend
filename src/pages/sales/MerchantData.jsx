@@ -37,7 +37,7 @@ export default function MerchantData() {
                        <div className="container-fluid">
                             <div className="row">
                                 <div className="col-3">
-                                    <img className="img-fluid w-100 h-75" alt="Card image" src={`${urlStoreImage}/${mer.store_image}`}/>
+                                    <img className="img-fluid w-100 h-75" alt="image" src={`${urlStoreImage}/${mer.store_image}`}/>
                                 </div>
                                 <div className="col-5">
                                     <p className="card-title">{mer.store_name}</p>

@@ -3,6 +3,8 @@ import axios from '../config/api'
 import {useParams} from 'react-router-dom'
 import { FaCheck, FaTimes } from "react-icons/fa";
 
+import {Link} from 'react-router-dom'
+
 export default function DetailMerchant() {
 
     const [merchant, setMerchant] = useState({})
@@ -65,7 +67,6 @@ export default function DetailMerchant() {
                             <div className="form-group">
                                 <label >Address</label>
                                 <h5>{merchant.address}</h5>
-                                <button type="button" className="btn btn-warning">Ganti Location</button>
                             </div>
                             <div className="form-group">
                                 <label className="mr-3">KTP Image</label>
@@ -76,6 +77,10 @@ export default function DetailMerchant() {
                                 <img className="img-thumbnail" src={`${urlSignatureImage}/${merchant.signature_image}`} alt=""/>
                             </div>
                         </form>
+
+                        <Link to={`/updatemerchant/${id}`}>
+                                <input type="button" value="Update Data" className="btn btn-success btn-block"/>
+                        </Link>  
                     </div>
                 </div>
             </div>
