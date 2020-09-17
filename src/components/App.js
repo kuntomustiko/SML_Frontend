@@ -23,7 +23,7 @@ import UpdateMerchant from '../pages/UpdateMerchant'
 import { useSelector } from 'react-redux';
 
 export default function App() {
-    // role id = 1 = sales, 2 = leader
+    // role id = 1 = leader, 2 = sales
     const role_id = useSelector(state => state.auth.role_id)
 
     const [loading, setLoading] = useState(true)
@@ -44,7 +44,7 @@ export default function App() {
             <BrowserRouter>
                 {
                 role_id === 1 ? <Route path="/" exact component={HomeSales} /> : 
-                role_id === 2 ? <Route path="/" exact component={Home} /> : 
+                role_id === 2 ? <Route path="/" exact component={HomeSales} /> : 
                 <Route path="/login" exact component={Login} />   
                 }
 

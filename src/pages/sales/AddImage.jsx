@@ -13,7 +13,7 @@ export default function AddImage() {
     const storeImageRef = useRef()
     const signatureRef = useRef()
 
-    const [id, setId] = useState()
+    // const [id, setId] = useState()
     const [boolBtnSubmitKTP, setBoolBtnSubmitKTP] = useState(false)
     const [boolBtnSubmitStore, setBoolBtnSubmitStore] = useState(false)
     const [boolBtnSubmitSignature, setBoolBtnSubmitSignature] = useState(false)
@@ -25,12 +25,12 @@ export default function AddImage() {
         getId()
     },[])
 
-
+    // get id = 10 dari staff_id = 4444
     // get id dari staff id di table_merchant
     const getId = () =>{
         axios.get(`/sales/read/id/${staff_id}`)
         .then(res => {
-            setId(res.data.id) // id 10 dari staff_id 4444
+            // setId(res.data.id) // id 10 dari staff_id 4444
             getLastDataFromId(res.data.id)
         })
         .catch(err => console.log({err}))
@@ -50,13 +50,15 @@ export default function AddImage() {
         const body = new FormData()
         let image = KTPRef.current.files[0]
 
+        const v2StoreName = lastData.store_name.replace(/\s/g, '')
+
         // 1 append merupakan 1 baris yang di isi di form-data 
         body.append("ktpimage", image)
         // upload gambar dengan membawa data-data
-        body.append("store_name", lastData.store_name)
+        body.append("store_name", v2StoreName)
         body.append("staff_id", lastData.staff_id)
 
-        axios.patch('/merchant/fistadd/ktpimage', body)
+        axios.patch('/merchant/firstadd/ktpimage', body)
         .then(res => {
             setBoolBtnSubmitKTP(true)
             console.log('foto telah berhasil dirubah')
@@ -67,13 +69,15 @@ export default function AddImage() {
         const body = new FormData()
         let image = storeImageRef.current.files[0]
 
+        const v2StoreName = lastData.store_name.replace(/\s/g, '')
+
         // 1 append merupakan 1 baris yang di isi di form-data 
         body.append("storeimage", image)
         // upload gambar dengan membawa data-data
-        body.append("store_name", lastData.store_name)
+        body.append("store_name", v2StoreName)
         body.append("staff_id", lastData.staff_id)
 
-        axios.patch('/merchant/fistadd/storeimage', body)
+        axios.patch('/merchant/firstadd/storeimage', body)
         .then(res => {
             setBoolBtnSubmitStore(true)
             console.log('foto telah berhasil dirubah')
@@ -83,14 +87,16 @@ export default function AddImage() {
     const onButtonSubmitSignatureImage = () => {
         const body = new FormData()
         let image = signatureRef.current.files[0]
+        
+        const v2StoreName = lastData.store_name.replace(/\s/g, '')
 
         // 1 append merupakan 1 baris yang di isi di form-data 
         body.append("signatureimage", image)
         // upload gambar dengan membawa data-data
-        body.append("store_name", lastData.store_name)
+        body.append("store_name", v2StoreName)
         body.append("staff_id", lastData.staff_id)
 
-        axios.patch('/merchant/fistadd/signatureimage', body)
+        axios.patch('/merchant/firstadd/signatureimage', body)
         .then(res => {
             setBoolBtnSubmitSignature(true)
             console.log('foto telah berhasil dirubah')

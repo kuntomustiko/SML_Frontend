@@ -8,9 +8,6 @@ import './style.css'
 export default function Login() {
     
     const dispatch = useDispatch()           
-    const email = useSelector(state => state.auth.email)
-    const staff_id = useSelector(state => state.auth.staff_id)
-    const role_id = useSelector(state => state.auth.role_id)
 
     const [boolLogin, setBoolLogin] = useState(false)
 
@@ -24,7 +21,7 @@ export default function Login() {
 
         let data = {email: vEmailRef, password: vPasswordRef}
 
-        axios.post('/login', data)
+        axios.post('/login_staff', data)
             .then(({data : {token, user : {id,staff_id, email, role_id}}}) => {
                 // simpan ke redux
                 dispatch(loginAction({staff_id, email, token, role_id}))

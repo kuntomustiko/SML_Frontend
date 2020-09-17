@@ -10,19 +10,23 @@ export default function DetailMerchant() {
     const [merchant, setMerchant] = useState({})
     const {id} = useParams()
     
-    const urlKTPImage = `http://localhost:2020/merchant/ktp`
-    const urlStoreImage = `http://localhost:2020/merchant/store`
-    const urlSignatureImage = `http://localhost:2020/merchant/signature`
-
+  
     useEffect(() =>{
         getDataDetailMerchant()
     },[])
+
+    const urlKTPImage = `http://localhost:2020/merchant/read/ktpimage`
+    const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
+    const urlSignatureImage = `http://localhost:2020/merchant/read/signatureimage`
+
 
     const getDataDetailMerchant = () =>{
         axios.get(`/detailmerchant/${id}`)
         .then(res => {
             setMerchant(res.data[0]);
             console.log(res.data[0]);
+            console.log(merchant.signature_image)
+
         })
         .catch(err => console.log({err}))
     }
@@ -39,7 +43,7 @@ export default function DetailMerchant() {
                             </div>
                         </div>
                         <div className="row text-center mt-3">
-                            {merchant.approval == "1" ? 
+                            {merchant.approval === "1" ? 
                                 <div className="col-12">
                                     <span className="text-primary"><FaCheck/> </span>
                                     <p className="text-primary">Approve</p>

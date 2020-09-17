@@ -8,8 +8,6 @@ import {Link} from 'react-router-dom'
 
 export default function UpdateMerchant() {
 
-    // 4444
-    const staff_id = useSelector(state => state.auth.staff_id)
 
     const categoryRef = useRef()
     const storeNameRef = useRef()
@@ -19,13 +17,6 @@ export default function UpdateMerchant() {
     const ktpImageRef = useRef()
     const storeImageRef = useRef()
     const signatureImageRef = useRef()
-
-    const [latitude, setLatitude] = useState()
-    const [longitude, setLongitude] = useState()
-    const [boolBtnSubmitData, setBooBtnSubmitData] = useState(false)
-    const [lastData, setLastData] = useState()
-
-    const [boolKosong, setBoolKosong] = useState(false)
 
     const [merchant, setMerchant] = useState({})
     const [category, setCategory] = useState([])
@@ -38,23 +29,15 @@ export default function UpdateMerchant() {
 
     const [inputGambar, setInputGambar] = useState(true)
 
-    const urlKTPImage = `http://localhost:2020/merchant/ktp`
-    const urlStoreImage = `http://localhost:2020/merchant/store`
-    const urlSignatureImage = `http://localhost:2020/merchant/signature`
+    const urlKTPImage = `http://localhost:2020/merchant/read/ktpimage`
+    const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
+    const urlSignatureImage = `http://localhost:2020/merchant/read/signatureimage`
 
     useEffect(() =>{
         getDataDetailMerchant()
         getAllCategory()
     },[])
 
-    const getLastDataFromId = () =>{
-        axios.get(`/merchant/lastdata/sales/${id}`)
-        .then(res => {
-            setLastData(res.data)
-            console.log(res.data);
-        })
-        .catch(err => console.log({err}))
-    }
 
     const getDataDetailMerchant = () =>{
         axios.get(`/detailmerchant/${id}`)
@@ -133,7 +116,8 @@ export default function UpdateMerchant() {
     }
 
     const onButtonSubmitKTPImage = () =>{
-        const vStoreNameRef = storeNameRef.current.value 
+        const vStoreNameRef = storeNameRef.current.value
+        const v2StoreNameref = vStoreNameRef.replace(/\s/g, '')
 
         const body = new FormData()
         let image = ktpImageRef.current.files[0]
@@ -141,7 +125,7 @@ export default function UpdateMerchant() {
         body.append("ktpimage", image)
         body.append("staff_id", merchant.staff_id)
         body.append("id", id)
-        body.append("store_name", vStoreNameRef )
+        body.append("store_name", v2StoreNameref )
 
         axios.patch('/merchant/update/ktpimage', body)
         .then(res =>{
@@ -151,7 +135,9 @@ export default function UpdateMerchant() {
     }
 
     const onButtonSubmitStoreImage = () =>{
-        const vStoreNameRef = storeNameRef.current.value 
+    
+        const vStoreNameRef = storeNameRef.current.value
+        const v2StoreNameref = vStoreNameRef.replace(/\s/g, '')
 
         const body = new FormData()
         let image = storeImageRef.current.files[0]
@@ -159,7 +145,7 @@ export default function UpdateMerchant() {
         body.append("storeimage", image)
         body.append("staff_id", merchant.staff_id)
         body.append("id", id)
-        body.append("store_name", vStoreNameRef )
+        body.append("store_name", v2StoreNameref )
 
         axios.patch('/merchant/update/storeimage', body)
         .then(res =>{
@@ -168,7 +154,8 @@ export default function UpdateMerchant() {
     }
 
     const onButtonSubmitSignatureImage = () =>{
-        const vStoreNameRef = storeNameRef.current.value 
+        const vStoreNameRef = storeNameRef.current.value
+        const v2StoreNameref = vStoreNameRef.replace(/\s/g, '')
 
         const body = new FormData()
         let image = signatureImageRef.current.files[0]
@@ -176,7 +163,7 @@ export default function UpdateMerchant() {
         body.append("signatureimage", image)
         body.append("staff_id", merchant.staff_id)
         body.append("id", id)
-        body.append("store_name", vStoreNameRef )
+        body.append("store_name", v2StoreNameref )
 
         axios.patch('/merchant/update/signature', body)
         .then(res =>{
@@ -232,9 +219,9 @@ export default function UpdateMerchant() {
                             <div className="form-group">
                                 <label >Address</label>
                                 {!address ? 
-                                    <input type="text" className="form-control form-control-sm" ref={addressRef} defaultValue={merchant.address} onChange={handleChangeAddress}/>
+                                    <textarea type="text" className="form-control form-control-sm"ref={addressRef} defaultValue={merchant.address} onChange={handleChangeAddress}/>
                                     :
-                                    <input type="text" className="form-control form-control-sm" ref={addressRef} value={address} onChange={handleChangeAddress}/>
+                                    <textarea type="text" className="form-control form-control-sm"ref={addressRef} value={address} onChange={handleChangeAddress}/>
                                 }
                             </div>
                             <div className="form-group">

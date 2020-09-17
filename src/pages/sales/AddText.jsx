@@ -13,13 +13,14 @@ export default function Add() {
     const categoryRef = useRef()
     const addressRef = useRef()
     const phone_numberRef = useRef()
+    const locationRef = useRef()
 
     const [latitude, setLatitude] = useState()
     const [longitude, setLongitude] = useState()
     const [location, setLocation] = useState(false)
     const [id, setId] = useState()
     const [boolBtnSubmitData, setBooBtnSubmitData] = useState(false)
-    const [lastData, setLastData] = useState()
+
     const [category, setCategory] = useState([])
 
     useEffect(() =>{
@@ -52,16 +53,6 @@ export default function Add() {
         .catch(err => console.log({err}))
     }
 
-    // get data dari id dan data terakhir
-    const getLastDataFromId = () =>{
-        axios.get(`/merchant/lastdata/sales/${id}`)
-        .then(res => {
-            setLastData(res.data)
-            console.log(res.data);
-        })
-        .catch(err => console.log({err}))
-    }
-
     // get read data all category for option
     const getAllCategory = () =>{
         axios.get(`/read/allcategory`)
@@ -74,9 +65,9 @@ export default function Add() {
 
     // render category option on UI
     const renderCategory = () =>{
-        return category.map((cat) =>{
+        return category.map((cat, index) =>{
             return(
-            <option value={cat.id}>{cat.category}</option>  
+            <option key={index} value={cat.id}>{cat.category}</option>  
             )
         })
     }
@@ -93,10 +84,17 @@ export default function Add() {
         const vCategoryRef = parseInt(categoryRef.current.value)
         const vAddressRef = addressRef.current.value 
         const vPhone_numberRef = phone_numberRef.current.value 
+        const vLocationRef = locationRef.current.value
 
         const latlong = `${latitude}, ${longitude}`
 
-        let data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: latlong, approval: 0 }
+        let data; 
+        
+        if (vLocationRef) {
+            data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: location, approval: 0 }
+        } else {
+            data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: latlong, approval: 0 }
+        }
 
         if (vStoreNameRef === "" || vCategoryRef === "" || vAddressRef === "" || vPhone_numberRef === "") {
             Swal.fire({
@@ -110,7 +108,6 @@ export default function Add() {
             .then(res => {
                 console.log(res);
                 setBooBtnSubmitData(true)
-                getLastDataFromId()
             }).catch(err => console.log({err}))
         }
       
@@ -136,7 +133,12 @@ export default function Add() {
                             <label>Phone number</label>
                                 <input type="text" className="form-control form-control-sm"ref={phone_numberRef} placeholder="Masukkan nomer telepon" required/>
                             <label>location</label>
-                                <p>Latitude {latitude} --- Longitude {longitude}</p>
+                                
+                                {!location ? 
+                                    <input type="text" className="form-control form-control-sm" ref={locationRef} placeholder="Masukkan Latitude Longitude" required/>
+                                    :
+                                    <p>Latitude {latitude} --- Longitude {longitude}</p>
+                                }
 
                             {!boolBtnSubmitData ? 
                                 <input onClick={onButtonSubmitData} type="button" value="Next" className="btn btn-success btn-block"/>

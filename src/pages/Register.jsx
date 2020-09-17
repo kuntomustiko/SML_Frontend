@@ -1,6 +1,8 @@
-import React, { useRef } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import {Link, Redirect} from 'react-router-dom'
 import axios from '../config/api'
+
+import Swal from 'sweetalert2'
 
 function Register() {
 
@@ -11,7 +13,9 @@ function Register() {
     const staffIDRef = useRef()
     const phoneNumberRef = useRef()
 
-    const onButtonClick = () => {
+    const [boolButtonSubmitRegister, SetBoolButtonSubmitRegister] = useState(false)
+
+    const onButtonSubmitRegister = () => {
         let vStaffId = staffIDRef.current.value 
         let vEmailRef = emailRef.current.value 
         let vNama = namaRef.current.value 
@@ -24,9 +28,28 @@ function Register() {
 
         let data = {staff_id: vStaffId , name: vNama , password: vPassword, email: vEmailRef, phone_number: vPhoneNumber, status}
 
-        axios.post('/register_staff', data)
-        .then(res => console.log(res.data))
-        .catch(err => console.log({err}))
+        if(!vStaffId || !vEmailRef || !vNama || !vPassword || !vPasswordCek || !vPhoneNumber){
+            Swal.fire({
+                icon: 'warning',
+                title: "Lengkapi data anda",
+                showConfirmButton: false,
+                timer: 1500
+            }); 
+        } else if(vStaffId && vEmailRef && vNama && vPassword && vPasswordCek && vPhoneNumber){
+            axios.post('/register_staff', data)
+            .then(res =>{
+            Swal.fire({
+                icon: 'warning',
+                title: res.data.message,
+                showConfirmButton: false,
+                timer: 1500
+            }); 
+            console.log(res.data)
+            SetBoolButtonSubmitRegister(true)
+            }) .catch(err => console.log({err}))
+        }
+
+        
     }
 
     return (
@@ -59,9 +82,16 @@ function Register() {
                                     <p className="text-center">Sudah punya akun?</p>
                                 </Link>
                                     
-                                <div>    
-                                    <input onClick={onButtonClick} type="button" value="Register" className="btn btn-success btn-block"/>
+                                <div>   
+                                    {!boolButtonSubmitRegister ? 
+                                        <input onClick={onButtonSubmitRegister} type="button" value="Register" className="btn btn-success btn-block"/>
+                                        : 
+                                        <Redirect to="/login" />
+                                    } 
                                 </div>
+
+                                
+                           
                             </div>
                         </div>
                     </div>

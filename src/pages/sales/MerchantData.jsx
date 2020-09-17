@@ -23,12 +23,12 @@ export default function MerchantData() {
         }).catch(err => console.log(err))
     }
 
-    const funDetail = (id) => {
+    const funDelete = (id) => {
         console.log(" staff " + staff_id);
     }
 
     // baca gambar
-    const urlStoreImage = `http://localhost:2020/merchant/store`
+    const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
 
     const renderMerchant = merchant.map((mer, index) => {
         console.log(merchant);
@@ -43,13 +43,12 @@ export default function MerchantData() {
                                 <div className="col-5">
                                     <h6 className="card-title">{mer.store_name}</h6>
                                     <small className="card-title">{mer.category}</small>
-                                
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant/${mer.id}`}>
                                     <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2 w-100">Detail</button>
                                 </Link>
-                                    <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm px-3 w-100">Delete</button>
+                                    <button type="button" onClick={() => {funDelete(mer.id)}} className="btn btn-danger btn-sm px-3 w-100">Delete</button>
                                 </div>   
                             </div>
                        </div>

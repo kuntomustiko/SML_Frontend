@@ -20,7 +20,7 @@ export default function Home() {
     const config = {headers: {Authorization: token}}  
 
     const funLogout = () =>{
-        axios.delete('/logout', config)
+        axios.delete('/logout_staff', config)
         .then(dispatch(logoutAction()))
     }
 
