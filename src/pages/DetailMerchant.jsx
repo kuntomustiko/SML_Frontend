@@ -79,7 +79,7 @@ export default function DetailMerchant() {
                         </form>
 
                         <Link to={`/updatemerchant/${id}`}>
-                                <input type="button" value="Update Data" className="btn btn-success btn-block"/>
+                                <input type="button" value="Update Data" className="btn btn-primary btn-block"/>
                         </Link>  
                     </div>
                 </div>

@@ -31,6 +31,7 @@ export default function MerchantData() {
     const urlStoreImage = `http://localhost:2020/merchant/store`
 
     const renderMerchant = merchant.map((mer, index) => {
+        console.log(merchant);
             return (
                 <div className="card mb-2 border border-primary" key={index}>
                     <div className="card-body">
@@ -40,14 +41,15 @@ export default function MerchantData() {
                                     <img className="img-fluid w-100 h-75" alt="image" src={`${urlStoreImage}/${mer.store_image}`}/>
                                 </div>
                                 <div className="col-5">
-                                    <p className="card-title">{mer.store_name}</p>
-                                    <p className="card-title">{mer.PIC}</p>
+                                    <h6 className="card-title">{mer.store_name}</h6>
+                                    <small className="card-title">{mer.category}</small>
+                                
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant/${mer.id}`}>
-                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2">Detail</button>
+                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2 w-100">Detail</button>
                                 </Link>
-                                    <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm px-3">Delete</button>
+                                    <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm px-3 w-100">Delete</button>
                                 </div>   
                             </div>
                        </div>

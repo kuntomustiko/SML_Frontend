@@ -1,7 +1,9 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector } from 'react-redux';
 import axios from '../../config/api'
+import {Redirect} from 'react-router-dom'
 
+import Swal from 'sweetalert2'
 
 export default function AddImage() {
 
@@ -15,6 +17,8 @@ export default function AddImage() {
     const [boolBtnSubmitKTP, setBoolBtnSubmitKTP] = useState(false)
     const [boolBtnSubmitStore, setBoolBtnSubmitStore] = useState(false)
     const [boolBtnSubmitSignature, setBoolBtnSubmitSignature] = useState(false)
+    const [boolBtnToHome, setBoolBtnToHome] = useState(false)
+
     const [lastData, setLastData] = useState()
 
     useEffect(() =>{
@@ -93,6 +97,18 @@ export default function AddImage() {
         }).catch(err => console.log(err))
     }
 
+    const funToHome = () =>{
+        if (boolBtnSubmitKTP && boolBtnSubmitStore && boolBtnSubmitSignature) {
+            setBoolBtnToHome(true)
+        } else{
+            Swal.fire({
+                icon: 'warning',
+                title: 'Lengkapi dahulu datanya',
+                showConfirmButton: false,
+                timer: 1500
+            }); 
+        }
+    }
     return (
         <div>
             <div className="card">
@@ -103,28 +119,55 @@ export default function AddImage() {
                     <form>
                         <div className="form-group">
                             <label className="mt-3">KTP image</label>
-                                <input type="file" className="form-control form-control-sm"ref={KTPRef} placeholder="Masukkan foto KTP" required/>
-                                {boolBtnSubmitKTP ? 
-                                    <input onClick={onButtonSubmitKTPImage} type="button" value="Sudah Tersimpan" className="btn btn-success btn-block mt-2 mb-3 disabled"/>
-                                :
-                                    <input onClick={onButtonSubmitKTPImage} type="button" value="Submit KTP" className="btn btn-success btn-block mt-2 mb-3"/>
-                                }
+                            <div className="row mb-3">
+                                <div className="col-6">
+                                    <input type="file" className="form-control form-control-sm mt-2"ref={KTPRef} placeholder="Masukkan foto KTP" required/>
+                                </div>
+                                <div className="col-6">
+                                    {boolBtnSubmitKTP ? 
+                                        <input onClick={onButtonSubmitKTPImage} type="button" value="Sudah Tersimpan" className="btn btn-success btn-block disabled"/>
+                                    :
+                                        <input onClick={onButtonSubmitKTPImage} type="button" value="Submit KTP" className="btn btn-success btn-block "/>
+                                    }
+                                </div>
+                            </div>
+
                             <label>Store image</label>
-                                <input type="file" className="form-control form-control-sm"ref={storeImageRef} placeholder="Masukkan foto toko" required/>
-                                {boolBtnSubmitStore ? 
-                                    <input onClick={onButtonSubmitStoreImage} type="button" value="Sudah Tersimpan" className="btn btn-success btn-block mt-2 mb-3 disabled"/>
-                                :
-                                    <input onClick={onButtonSubmitStoreImage} type="button" value="Submit Store" className="btn btn-success btn-block mt-2 mb-3"/>
-                                }
+                            <div className="row">
+                                <div className="col-6">
+                                    <input type="file" className="form-control form-control-sm mt-2"ref={storeImageRef} placeholder="Masukkan foto toko" required/>
+                                </div>
+                                <div className="col-6">
+                                    {boolBtnSubmitStore ? 
+                                        <input onClick={onButtonSubmitStoreImage} type="button" value="Sudah Tersimpan" className="btn btn-success btn-block mt-2 mb-3 disabled"/>
+                                    :
+                                        <input onClick={onButtonSubmitStoreImage} type="button" value="Submit Store" className="btn btn-success btn-block mt-2 mb-3"/>
+                                    }
+                                </div>
+                            </div>
+                               
                             <label>Signature</label>
-                            <input type="file" className="form-control form-control-sm"ref={signatureRef} placeholder="Masukkan tanda tangan" required/>
-                                {boolBtnSubmitSignature ? 
-                                    <input onClick={onButtonSubmitSignatureImage} type="button" value="Sudah Tersimpan" className="btn btn-success btn-block mt-2 mb-3 disabled"/>
-                                :
-                                    <input onClick={onButtonSubmitSignatureImage} type="button" value="Submit Signature" className="btn btn-success btn-block mt-2 mb-3"/>
-                                }
+                            <div className="row">
+                                <div className="col-6">
+                                    <input type="file" className="form-control form-control-sm mt-2" ref={signatureRef} placeholder="Masukkan tanda tangan" required/>
+                                </div>
+                                <div className="col-6">
+                                    {boolBtnSubmitSignature ? 
+                                        <input onClick={onButtonSubmitSignatureImage} type="button" value="Sudah Tersimpan" className="btn btn-success btn-block mt-2 mb-3 disabled"/>
+                                    :
+                                        <input onClick={onButtonSubmitSignatureImage} type="button" value="Submit Signature" className="btn btn-success btn-block mt-2 mb-3"/>
+                                    }
+                                </div>
+                            </div>
+                             
                         </div>
                     </form>
+
+                    {!boolBtnToHome ? 
+                        <input onClick={funToHome} type="button" value="Home" className="btn btn-primary btn-block"/>
+                            : 
+                        <Redirect to="/" />
+                    }
                 </div>
             </div>
         </div>
