@@ -89,8 +89,6 @@ function Register() {
                                         <Redirect to="/login" />
                                     } 
                                 </div>
-
-                                
                            
                             </div>
                         </div>
