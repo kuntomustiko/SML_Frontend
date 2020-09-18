@@ -4,6 +4,8 @@ import {useParams} from 'react-router-dom'
 import { FaCheck, FaTimes } from "react-icons/fa";
 import {Link} from 'react-router-dom'
 
+import Swal from 'sweetalert2'
+
 export default function UpdateMerchant() {
 
     const categoryRef = useRef()
@@ -169,10 +171,24 @@ export default function UpdateMerchant() {
     const onButtonSubmitNotApproval = () =>{
         const not_approval = 0
         const data = {approval: not_approval }
-        axios.patch(`/merchant/leader/update/approval/${id}`, data)
-        .then(res =>{
-            window.location.reload(false);
-        }).catch(err => console.log(err))
+
+        Swal.fire({
+            title: 'Yakin?',
+            showCancelButton: true,
+            confirmButtonText: `Save`
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.patch(`/merchant/leader/update/approval/${id}`, data)
+                .then(res =>{
+                    window.location.reload(false);
+                  
+                }).catch(err => console.log(err))
+              Swal.fire('Saved!', '', 'success')
+            } 
+          })
+
+       
     }
 
     // button untuk memberikan approval

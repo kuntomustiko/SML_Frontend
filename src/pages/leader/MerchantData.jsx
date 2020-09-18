@@ -84,7 +84,7 @@ export default function MerchantData() {
     return (
         <div className="main mx-auto p-5">
             <div className="row mb-3 mx-auto">
-                {filterMerchant()}
+                {/* {filterMerchant()} */}
             </div>
             <div className="row">
                 {renderMerchant}

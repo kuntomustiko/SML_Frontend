@@ -52,9 +52,9 @@ export default function MerchantData() {
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant/${mer.id}`}>
-                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2 w-100">Detail</button>
+                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2">Detail</button>
                                 </Link>
-                                    <button type="button" onClick={() => {funDelete(mer.id, mer.staff_id)}} className="btn btn-danger btn-sm px-3 w-100">Delete</button>
+                                    <button type="button" onClick={() => {funDelete(mer.id, mer.staff_id)}} className="btn btn-danger btn-sm px-3">Delete</button>
                                 </div>   
                             </div>
                        </div>

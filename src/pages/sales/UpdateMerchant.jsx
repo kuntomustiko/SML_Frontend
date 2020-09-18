@@ -69,7 +69,6 @@ export default function UpdateMerchant() {
 
     function handleChangeStoreName(e) {
         setStoreName(e.target.value)
-       
     }
     
     function handleChangeMobileNumber(e) {
@@ -93,7 +92,6 @@ export default function UpdateMerchant() {
     }
 
 
-    // belum bisa
     const onButtonSubmitData = () => {
         const vStoreNameRef = storeNameRef.current.value 
         const vCategoryRef = parseInt(categoryRef.current.value)
