@@ -2,15 +2,18 @@ import React, {useState, useEffect} from 'react'
 import axios from '../config/api'
 import {useParams} from 'react-router-dom'
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 import {Link} from 'react-router-dom'
 
 export default function DetailMerchant() {
 
+    // ambil role_id nya apakah leader atau sales
+    const role_id = useSelector(state => state.auth.role_id)
+
     const [merchant, setMerchant] = useState({})
     const {id} = useParams()
     
-  
     useEffect(() =>{
         getDataDetailMerchant()
     },[])
@@ -82,9 +85,16 @@ export default function DetailMerchant() {
                             </div>
                         </form>
 
-                        <Link to={`/updatemerchant/${id}`}>
+                        {role_id === 1 ? 
+                            <Link to={`/updatemerchantleader/${id}`}>
                                 <input type="button" value="Update Data" className="btn btn-primary btn-block"/>
-                        </Link>  
+                            </Link> 
+                        :
+                            <Link to={`/updatemerchantsales/${id}`}>
+                                <input type="button" value="Update Data" className="btn btn-primary btn-block"/>
+                            </Link> 
+                        }
+                    
                     </div>
                 </div>
             </div>

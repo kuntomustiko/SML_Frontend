@@ -71,7 +71,7 @@ function Register() {
                                         <label>Nama</label>
                                             <input type="text" className="form-control"ref={namaRef} placeholder="Masukkan nama" required/>
                                         <label>Phone Number</label>
-                                            <input type="text" className="form-control"ref={phoneNumberRef} placeholder="Masukkan phone number" required/>
+                                            <input type="number" className="form-control"ref={phoneNumberRef} placeholder="Masukkan phone number" required/>
                                         <label>Password</label>
                                             <input type="password" className="form-control"ref={passwordCekRef} placeholder="Masukkan password" required/>
                                         <label>Password</label>

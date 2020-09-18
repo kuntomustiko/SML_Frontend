@@ -12,22 +12,24 @@ export default function MerchantData() {
     }, [])
 
     const getMerchant = () =>{
-        console.log(staff_id);
-        axios.get(`/merchant/sales/read/${staff_id}`).then((res) =>{
+        axios.get(`/merchant/leader/read`).then((res) =>{
             setMerchant(res.data)
-            console.log(res.data);
         }).catch(err => console.log(err))
     }
 
-    const funDetail = (id) => {
-        console.log(" staff " + staff_id);
+  
+    const funDelete = (id) => {
+        axios.delete(`/merchant/leader/delete/${id}`).then((res) =>{
+            console.log(res);
+            getMerchant()
+        }).catch(err => console.log(err))
     }
 
-    // baca gambar
-    const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
-
     const renderMerchant = merchant.map((mer, index) => {
-            return (
+            // baca gambar
+            const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
+    
+        return (
                 <div className="card mb-2 border border-primary" key={index}>
                     <div className="card-body">
                        <div className="container-fluid">
@@ -37,13 +39,13 @@ export default function MerchantData() {
                                 </div>
                                 <div className="col-5">
                                     <h6 className="card-title">{mer.store_name}</h6>
-                                    <small className="card-title">{mer.PIC}</small>
+                                    <small className="card-title">{mer.category}</small>
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant/${mer.id}`}>
                                     <button type="button" className="btn btn-primary btn-sm dropdown-headerpx-3 mb-2 mr-2 w-100">Detail</button>
                                 </Link>
-                                    <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm ppx-3 w-100">Delete</button>
+                                    <button type="button" onClick={() => {funDelete(mer.id)}} className="btn btn-danger btn-sm ppx-3 w-100">Delete</button>
                                 </div>   
                             </div>
                        </div>
