@@ -43,7 +43,7 @@ export default function App() {
         <div>
             <BrowserRouter>
                 {
-                role_id === 1 ? <Route path="/" exact component={HomeSales} /> : 
+                role_id === 1 ? <Route path="/" exact component={Home} /> : 
                 role_id === 2 ? <Route path="/" exact component={HomeSales} /> : 
                 <Route path="/login" exact component={Login} />   
                 }

@@ -84,17 +84,21 @@ export default function Add() {
         const vCategoryRef = parseInt(categoryRef.current.value)
         const vAddressRef = addressRef.current.value 
         const vPhone_numberRef = phone_numberRef.current.value 
-        const vLocationRef = locationRef.current.value
-
         const latlong = `${latitude}, ${longitude}`
 
         let data; 
-        
-        if (vLocationRef) {
-            data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: location, approval: 0 }
-        } else {
-            data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: latlong, approval: 0 }
+        let vLocationRef;
+
+        if (location === false) {
+            // jika window detect mamp locationnya mati
+            vLocationRef = locationRef.current.value
+            data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: vLocationRef, approval: 0 }
+        } else{
+            data = {staff_id: id, date_created: today, store_name: vStoreNameRef, category_id: vCategoryRef, address: vAddressRef, mobile_number: vPhone_numberRef, location: latlong, approval: 0 }     
+
         }
+        
+     
 
         if (vStoreNameRef === "" || vCategoryRef === "" || vAddressRef === "" || vPhone_numberRef === "") {
             Swal.fire({
@@ -131,7 +135,7 @@ export default function Add() {
                             <label>Address</label>
                                 <textarea type="text" className="form-control form-control-sm"ref={addressRef} placeholder="Masukkan alamat" required/>
                             <label>Phone number</label>
-                                <input type="text" className="form-control form-control-sm"ref={phone_numberRef} placeholder="Masukkan nomer telepon" required/>
+                                <input type="number" className="form-control form-control-sm"ref={phone_numberRef} placeholder="Masukkan nomer telepon" required/>
                             <label>location</label>
                                 
                                 {!location ? 

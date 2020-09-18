@@ -24,7 +24,7 @@ export default function MerchantData() {
     }
 
     // baca gambar
-    const urlStoreImage = `http://localhost:2020/merchant/store`
+    const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
 
     const renderMerchant = merchant.map((mer, index) => {
             return (
@@ -33,17 +33,17 @@ export default function MerchantData() {
                        <div className="container-fluid">
                             <div className="row">
                                 <div className="col-3">
-                                    <img className="card-img w-50 my-1 mx-1" alt="Card image" src={`${urlStoreImage}/${mer.store_image}`}/>
+                                    <img className="card-img w-100 h-75" alt="Card image" src={`${urlStoreImage}/${mer.store_image}`}/>
                                 </div>
                                 <div className="col-5">
-                                    <p className="card-title">{mer.store_name}</p>
-                                    <p className="card-title">{mer.PIC}</p>
+                                    <h6 className="card-title">{mer.store_name}</h6>
+                                    <small className="card-title">{mer.PIC}</small>
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant/${mer.id}`}>
-                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2">Detail</button>
+                                    <button type="button" className="btn btn-primary btn-sm dropdown-headerpx-3 mb-2 mr-2 w-100">Detail</button>
                                 </Link>
-                                    <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm px-3">Delete</button>
+                                    <button type="button" onClick={() => {funDetail(mer.id)}} className="btn btn-danger btn-sm ppx-3 w-100">Delete</button>
                                 </div>   
                             </div>
                        </div>

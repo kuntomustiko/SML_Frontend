@@ -23,15 +23,21 @@ export default function MerchantData() {
         }).catch(err => console.log(err))
     }
 
-    const funDelete = (id) => {
-        console.log(" staff " + staff_id);
+    const funDelete = (id, staff_id) => {
+        console.log("id merchant " + id); // 44
+        console.log("staff_id" + staff_id); // 10 
+
+        axios.delete(`/merchant/sales/delete/${id}/${staff_id}`).then((res) =>{
+            console.log(res);
+            getMerchant()
+        }).catch(err => console.log(err))
     }
 
     // baca gambar
-    const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
-
+    
     const renderMerchant = merchant.map((mer, index) => {
         console.log(merchant);
+        const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
             return (
                 <div className="card mb-2 border border-primary" key={index}>
                     <div className="card-body">
@@ -48,7 +54,7 @@ export default function MerchantData() {
                                 <Link to={`/detailmerchant/${mer.id}`}>
                                     <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2 w-100">Detail</button>
                                 </Link>
-                                    <button type="button" onClick={() => {funDelete(mer.id)}} className="btn btn-danger btn-sm px-3 w-100">Delete</button>
+                                    <button type="button" onClick={() => {funDelete(mer.id, mer.staff_id)}} className="btn btn-danger btn-sm px-3 w-100">Delete</button>
                                 </div>   
                             </div>
                        </div>
