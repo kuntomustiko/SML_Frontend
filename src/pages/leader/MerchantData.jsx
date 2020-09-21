@@ -34,8 +34,6 @@ export default function MerchantData() {
               Swal.fire('Deleted!', '', 'success')
             } 
           })
-
-      
     }
 
     const renderMerchant = merchant.map((mer, index) => {
