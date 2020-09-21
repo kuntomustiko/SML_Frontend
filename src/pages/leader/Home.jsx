@@ -1,7 +1,7 @@
 import React from 'react'
-import {Link,Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 // Icons
-import { FaList, FaTimes, FaSignal, FaEllo } from 'react-icons/fa';
+import { FaList, FaSignal, FaEllo, FaUserTimes} from 'react-icons/fa';
 import { MdPeople } from "react-icons/md";
 
 import axios from '../../config/api'
@@ -51,7 +51,7 @@ export default function Home() {
                     <div className="col text-center">
                         <Link to={`/listnotapproval`}>
                             <div className="card" style={{width: "10rem", height: "10rem"}}>
-                                <h3 className="display-4"><FaTimes/></h3> 
+                                <h3 className="display-4"><FaUserTimes/></h3> 
                                 <div className="card-body">
                                 <p>Not Approval</p>
                                 </div>

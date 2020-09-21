@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import axios from '../../config/api'
 import {useParams} from 'react-router-dom'
-import {useSelector} from 'react-redux'
 import { FaCheck, FaTimes } from "react-icons/fa";
 
 import {Link} from 'react-router-dom'

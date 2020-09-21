@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef} from 'react'
 import axios from '../../config/api'
 import { Redirect} from 'react-router-dom'
 

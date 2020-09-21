@@ -3,7 +3,6 @@ import {Link,Redirect} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import axios from '../../config/api'
 
-
 export default function MerchantData() {
 
     // dari redux dev tools = 4444 = staff_id
@@ -33,8 +32,6 @@ export default function MerchantData() {
         }).catch(err => console.log(err))
     }
 
-    // baca gambar
-    
     const renderMerchant = merchant.map((mer, index) => {
         console.log(merchant);
         const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`

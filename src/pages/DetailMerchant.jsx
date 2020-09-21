@@ -37,8 +37,8 @@ export default function DetailMerchant() {
 
     return (
         <div>
-            <div className="container-fluid">
-                <div className="card">
+            <div className="container-fluid ">
+                <div className="card shadow">
                     <div className="card-body">
                         <div className="row">
                             <div className="col text-center">

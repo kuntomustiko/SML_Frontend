@@ -13,11 +13,7 @@ export default function Home() {
 
     // Logout
     const dispatch = useDispatch()
-    const staff_id = useSelector(state => state.auth.staff_id)
-    const email = useSelector(state => state.auth.email)
     const token = useSelector(state => state.auth.token)
-    const role_id = useSelector(state => state.auth.role_id)
-    
     const config = {headers: {Authorization: token}}  
 
     const funLogout = () =>{

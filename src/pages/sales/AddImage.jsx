@@ -50,13 +50,14 @@ export default function AddImage() {
         const body = new FormData()
         let image = KTPRef.current.files[0]
 
-        const v2StoreName = lastData.store_name.replace(/\s/g, '')
-
         // 1 append merupakan 1 baris yang di isi di form-data 
         body.append("ktpimage", image)
         // upload gambar dengan membawa data-data
-        body.append("store_name", v2StoreName)
+        body.append("store_name", lastData.store_name)
         body.append("staff_id", lastData.staff_id)
+        console.log(image);
+        console.log(lastData.store_name);
+        console.log(lastData.staff_id);
 
         axios.patch('/merchant/firstadd/ktpimage', body)
         .then(res => {
@@ -69,12 +70,10 @@ export default function AddImage() {
         const body = new FormData()
         let image = storeImageRef.current.files[0]
 
-        const v2StoreName = lastData.store_name.replace(/\s/g, '')
-
         // 1 append merupakan 1 baris yang di isi di form-data 
         body.append("storeimage", image)
         // upload gambar dengan membawa data-data
-        body.append("store_name", v2StoreName)
+        body.append("store_name", lastData.store_name)
         body.append("staff_id", lastData.staff_id)
 
         axios.patch('/merchant/firstadd/storeimage', body)
@@ -87,13 +86,11 @@ export default function AddImage() {
     const onButtonSubmitSignatureImage = () => {
         const body = new FormData()
         let image = signatureRef.current.files[0]
-        
-        const v2StoreName = lastData.store_name.replace(/\s/g, '')
 
         // 1 append merupakan 1 baris yang di isi di form-data 
         body.append("signatureimage", image)
         // upload gambar dengan membawa data-data
-        body.append("store_name", v2StoreName)
+        body.append("store_name", lastData.store_name)
         body.append("staff_id", lastData.staff_id)
 
         axios.patch('/merchant/firstadd/signatureimage', body)

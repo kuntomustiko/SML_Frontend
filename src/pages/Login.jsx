@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {Link,Redirect} from 'react-router-dom'
 import axios from '../config/api'
 import {loginAction} from '../config/redux/actions/index'

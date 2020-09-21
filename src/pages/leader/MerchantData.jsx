@@ -1,10 +1,10 @@
-import React, {useState, useRef, useEffect} from 'react'
-import {Link,Redirect} from 'react-router-dom'
-import { useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import axios from '../../config/api'
 
+import Swal from 'sweetalert2'
+
 export default function MerchantData() {
-    const staff_id = useSelector(state => state.auth.staff_id)
     const [merchant, setMerchant] = useState([])
 
     useEffect(() => {
@@ -19,10 +19,23 @@ export default function MerchantData() {
 
   
     const funDelete = (id) => {
-        axios.delete(`/merchant/leader/delete/${id}`).then((res) =>{
-            console.log(res);
-            getMerchant()
-        }).catch(err => console.log(err))
+
+        Swal.fire({
+            title: 'Yakin?',
+            showCancelButton: true,
+            confirmButtonText: `Delete`
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete(`/merchant/leader/delete/${id}`).then((res) =>{
+                    console.log(res);
+                    getMerchant()
+                }).catch(err => console.log(err))
+              Swal.fire('Deleted!', '', 'success')
+            } 
+          })
+
+      
     }
 
     const renderMerchant = merchant.map((mer, index) => {

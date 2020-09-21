@@ -1,5 +1,4 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {Link,Redirect} from 'react-router-dom'
 import axios from '../../config/api'
 
 export default function SalesData() {
@@ -11,18 +10,16 @@ export default function SalesData() {
      const staffIdRef = useRef()
 
     useEffect(() =>{
+        const getDataSales = () => {
+            axios.get(`/merchant/leader/read/salesdata`).then((res) =>{
+                setSalesData(res.data)
+                renderCountMerchant(res.data.staff_id)
+            }).catch(err => console.log(err))
+        }
         getDataSales()
     },[])
 
-    const getDataSales = () => {
-        axios.get(`/merchant/leader/read/salesdata`).then((res) =>{
-            setSalesData(res.data)
-            console.log(res.data);
-            renderCountMerchant(res.data.staff_id)
-        }).catch(err => console.log(err))
-
-        // renderCountMerchant(salesData.staff_id)
-    }
+ 
     
     const renderCountMerchant = (staff_id) =>{
    

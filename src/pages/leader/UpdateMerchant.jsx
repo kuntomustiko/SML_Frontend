@@ -23,6 +23,7 @@ export default function UpdateMerchant() {
     const [mobileNumber, setMobileNumber] = useState("")
     const [location, setLocation] = useState("")
     const [address, setAddress] = useState("")
+
     // 34
     const {id} = useParams()
 
@@ -90,7 +91,7 @@ export default function UpdateMerchant() {
         setInputGambar(false)
     }
 
-    // belum bisa
+   
     const onButtonSubmitData = () => {
         const vStoreNameRef = storeNameRef.current.value 
         const vCategoryRef = parseInt(categoryRef.current.value)
@@ -109,6 +110,8 @@ export default function UpdateMerchant() {
             .then(res => {
                 console.log(res);
                 console.log(data);
+                window.location.reload(false);
+            
             }).catch(err => console.log({err}))
     }
 
@@ -123,6 +126,7 @@ export default function UpdateMerchant() {
         body.append("staff_id", merchant.staff_id)
         body.append("id", id)
         body.append("store_name", v2StoreNameref )
+        body.append("approval", 0)
 
         axios.patch('/merchant/update/ktpimage', body)
         .then(res =>{
@@ -142,6 +146,7 @@ export default function UpdateMerchant() {
         body.append("staff_id", merchant.staff_id)
         body.append("id", id)
         body.append("store_name", v2StoreNameref )
+        body.append("approval", 0)
 
         axios.patch('/merchant/update/storeimage', body)
         .then(res =>{
@@ -160,10 +165,11 @@ export default function UpdateMerchant() {
         body.append("staff_id", merchant.staff_id)
         body.append("id", id)
         body.append("store_name", v2StoreNameref )
+        body.append("approval", 0)
 
         axios.patch('/merchant/update/signature', body)
         .then(res =>{
-            window.location.reload(false);
+            window.location.reload(false);            
         }).catch(err => console.log(err))
     }
 
@@ -182,7 +188,6 @@ export default function UpdateMerchant() {
                 axios.patch(`/merchant/leader/update/approval/${id}`, data)
                 .then(res =>{
                     window.location.reload(false);
-                  
                 }).catch(err => console.log(err))
               Swal.fire('Saved!', '', 'success')
             } 
@@ -207,7 +212,7 @@ export default function UpdateMerchant() {
                 <div className="card">
                     <div className="card-body">
                         <div className="row text-center mt-3">
-                            {merchant.approval == "1" ? 
+                            {merchant.approval == "1"  ? 
                                 <div className="col-12">
                                     <span className="text-primary"><FaCheck/> </span>
                                     <p className="text-primary">Approve</p>
@@ -222,11 +227,11 @@ export default function UpdateMerchant() {
                         <div className="row text-center mb-5">
                             {merchant.approval == "1" ? 
                                 <div className="col-12">
-                                    <button type="button" onClick={onButtonSubmitNotApproval} class="btn btn-danger">Not Approve</button>
+                                    <button type="button" onClick={onButtonSubmitNotApproval} className="btn btn-danger">Not Approve</button>
                                 </div> 
                             :
                                 <div className="col-12">
-                                    <button type="button" onClick={onButtonSubmitApproval} class="btn btn-primary">Approve</button>
+                                    <button type="button" onClick={onButtonSubmitApproval} className="btn btn-primary">Approve</button>
                                 </div>
                             }
                         </div>
