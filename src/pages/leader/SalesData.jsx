@@ -55,7 +55,7 @@ export default function SalesData() {
     
     const filterStaffId =  () =>{
         return(
-            <div className="mx-auto shadow">
+            <div className="mx-auto shadow ">
                 <div className="card text-center" style={{width: "15rem"}}>
                     <div className="card-body">
                         <form>
@@ -75,7 +75,7 @@ export default function SalesData() {
     const renderFilter = resultFilter.map((sales, index) => {
         return (
             <div key={index} className="card mb-2 border border-primary shadow-sm">
-                <div className="card-body">
+                <div className="card-body ">
                    <div className="container-fluid">
                         <h5 className="card-title">{sales.name}</h5>
                         <small>{sales.staff_id}</small>
