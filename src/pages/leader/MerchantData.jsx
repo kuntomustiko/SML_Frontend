@@ -4,12 +4,26 @@ import axios from '../../config/api'
 
 import Swal from 'sweetalert2'
 
+// paginate
+import Paginator from 'react-hooks-paginator';
+import './MerchantData.css'
+
 export default function MerchantData() {
     const [merchant, setMerchant] = useState([])
 
-    useEffect(() => {
+      // paginate
+      const pageLimit = 5;
+      const [offset, setOffset] = useState(0);
+      const [currentPage, setCurrentPage] = useState(1);
+      const [currentData, setCurrentData] = useState([]);
+
+      useEffect(() => {
         getMerchant();
     }, [])
+   
+    useEffect(() => {
+      setCurrentData(merchant.slice(offset, offset + pageLimit));
+    }, [offset, merchant]);
 
     const getMerchant = () =>{
         axios.get(`/merchant/leader/read`).then((res) =>{
@@ -36,7 +50,7 @@ export default function MerchantData() {
           })
     }
 
-    const renderMerchant = merchant.map((mer, index) => {
+    const renderMerchant = currentData.map((mer, index) => {
             // baca gambar
             const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
     
@@ -97,8 +111,21 @@ export default function MerchantData() {
             <div className="row mb-3 mx-auto">
                 {/* {filterMerchant()} */}
             </div>
-            <div className="row">
+            <div className="row" >
                 {renderMerchant}
+            </div>
+            <div className="row" >
+                <div className="col-12 text-center">
+                    <Paginator
+                    totalRecords={merchant.length}
+                    pageLimit={pageLimit}
+                    pageNeighbours={2}
+                    setOffset={setOffset}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+                </div>
+            
             </div>
         </div>        
     )

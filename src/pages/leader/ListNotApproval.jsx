@@ -2,14 +2,29 @@ import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import axios from '../../config/api'
 
+import Swal from 'sweetalert2'
+
+// paginate
+import Paginator from 'react-hooks-paginator';
+import './MerchantData.css'
+
 export default function ListNotApprove() {
 
     const [notApproval, setNotApproval] = useState([])
 
+    // paginate
+    const pageLimit = 5;
+    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentData, setCurrentData] = useState([]);
+
     useEffect(() => {
         getNotApproval();
     }, [])
-
+   
+    useEffect(() => {
+      setCurrentData(notApproval.slice(offset, offset + pageLimit));
+    }, [offset, notApproval]);
     
     const getNotApproval = () =>{
         axios.get(`/merchant/leader/read/notapproval`).then((res) =>{
@@ -18,8 +33,26 @@ export default function ListNotApprove() {
         }).catch(err => console.log(err))
     }
 
+    const funDelete = (id) => {
 
-    const renderNotApproval = notApproval.map((app, index) => {
+        Swal.fire({
+            title: 'Yakin?',
+            showCancelButton: true,
+            confirmButtonText: `Delete`
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete(`/merchant/leader/delete/${id}`).then((res) =>{
+                    console.log(res);
+                    getNotApproval()
+                }).catch(err => console.log(err))
+              Swal.fire('Deleted!', '', 'success')
+            } 
+          })
+    }
+
+
+    const renderNotApproval = currentData.map((app, index) => {
         console.log(app);
         const urlStoreImage = `http://localhost:2020/merchant/read/storeimage`
             return (
@@ -36,9 +69,9 @@ export default function ListNotApprove() {
                                 </div>
                                 <div className="col-4"> 
                                 <Link to={`/detailmerchant/${app.id}`}>
-                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2">Detail</button>
+                                    <button type="button" className="btn btn-primary btn-sm px-3 mb-2 mr-2 w-100">Detail</button>
                                 </Link>
-                                    <button type="button" className="btn btn-danger btn-sm px-3">Delete</button>
+                                <button type="button" onClick={() => {funDelete(app.id)}} className="btn btn-danger btn-sm px-3 mb-2 mr-2 w-100">Delete</button>
                                 </div>   
                             </div>
                        </div>
@@ -56,6 +89,18 @@ export default function ListNotApprove() {
             </div>
             <div className="row">
                 {renderNotApproval}
+            </div>
+            <div className="row">
+                <div className="col-12 text-center">
+                    <Paginator
+                        totalRecords={notApproval.length}
+                        pageLimit={pageLimit}
+                        pageNeighbours={2}
+                        setOffset={setOffset}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
+                </div>
             </div>
         </div>        
     )

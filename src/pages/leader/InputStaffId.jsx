@@ -37,7 +37,7 @@ export default function InputStaffId() {
                     </div>
                 </form>
                 {!boolBtnSubmitData ? 
-                    <input onClick={onButtonSubmitData} type="button" value="Next" className="btn btn-success btn-block"/>
+                    <input onClick={onButtonSubmitData} type="button" value="Next" className="btn btn-primary btn-block"/>
                     : 
                     <Redirect to="/" />
                 }

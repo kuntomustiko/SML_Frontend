@@ -70,7 +70,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="row mt-3 mx-auto" style={{width: "100vw"}}>
+                {/* <div className="row mt-3 mx-auto" style={{width: "100vw"}}>
                     <div className="col-12 text-center">
                         <Link to={`/inputstaffid`}>
                             <div className="card" style={{width: "10rem", height: "10rem"}}>
@@ -81,12 +81,12 @@ export default function Home() {
                             </div>
                         </Link>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="row">
                     <div className="col-12 mt-5 text-center">
                         <Link to={`/login`}>
-                            <input type="button" value="Logout" onClick={funLogout} className="btn btn-warning w-75 text-primary"/>
+                            <input type="button" value="Logout" onClick={funLogout} className="btn btn-warning w-75 "/>
                         </Link>
                     </div>
                 </div>

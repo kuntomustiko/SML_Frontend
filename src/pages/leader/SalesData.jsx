@@ -1,6 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react'
 import axios from '../../config/api'
 
+// paginate
+import Paginator from 'react-hooks-paginator';
+import './MerchantData.css'
+
 export default function SalesData() {
     const [salesData, setSalesData] = useState([])
     const [countSales, setCountSales] = useState()
@@ -9,20 +13,30 @@ export default function SalesData() {
 
      const staffIdRef = useRef()
 
-    useEffect(() =>{
-        const getDataSales = () => {
-            axios.get(`/merchant/leader/read/salesdata`).then((res) =>{
-                setSalesData(res.data)
-                renderCountMerchant(res.data.staff_id)
-            }).catch(err => console.log(err))
-        }
-        getDataSales()
-    },[])
+     // paginate
+    const pageLimit = 5;
+    const [offset, setOffset] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentData, setCurrentData] = useState([]);
 
+
+    useEffect(() => {
+        getDataSales()
+    }, [])
+   
+    useEffect(() => {
+      setCurrentData(salesData.slice(offset, offset + pageLimit));
+    }, [offset, salesData]);
+
+    const getDataSales = () => {
+        axios.get(`/merchant/leader/read/salesdata`).then((res) =>{
+            setSalesData(res.data)
+            renderCountMerchant(res.data.staff_id)
+        }).catch(err => console.log(err))
+    }
  
     
     const renderCountMerchant = (staff_id) =>{
-   
             axios.get(`/sales/read/id/${staff_id}`)
             .then(res => {
                axios.get(`/merchant/leader/read/countmerchantsales/${res.data.id}`)
@@ -85,7 +99,7 @@ export default function SalesData() {
         )
     })  
 
-    const renderSales = salesData.map((sales, index) => {
+    const renderSales = currentData.map((sales, index) => {
             return (
                 <div key={index} className="card mb-2 border border-primary shadow-sm">
                     <div className="card-body">
@@ -112,6 +126,19 @@ export default function SalesData() {
                     {resultFilter.length > 0 ? 
                     renderFilter :
                     renderSales}
+                </div>
+            </div>
+
+            <div className="row">
+                <div className="col-12">
+                    <Paginator
+                        totalRecords={salesData.length}
+                        pageLimit={pageLimit}
+                        pageNeighbours={2}
+                        setOffset={setOffset}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                    />
                 </div>
             </div>
         </div>        
